@@ -2,8 +2,7 @@ import { API_URL, DEFAULT_PIXABAY_PARAMS } from './config.js';
 import { btnLoadMore } from '../index.js';
 import axios from 'axios';
 import Notiflix, { Notify } from 'notiflix';
-import { btnLoadMore } from '../index.js';
-export default async function dataFromPixabay({ q = '', page = '1' }) {
+export default async function dataFromPixabay({ q = '', page = '' }) {
   try {
     const query = {
       ...DEFAULT_PIXABAY_PARAMS,

@@ -1,7 +1,6 @@
 import './css/styles.css';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import Notiflix, { Notify } from 'notiflix';
 import dataFromPixabay from './js/pixabay.js';
 
 
@@ -9,9 +8,8 @@ const searchQuery = document.querySelector('input[name="searchQuery"]');
 const searchForm = document.querySelector('.search-form');
 export const btnLoadMore = document.querySelector('.load-more');
 const numberOfPage = document.querySelector('input[name="page"]');
-
+const galleryEl = document.querySelector('.gallery');
 searchForm.addEventListener('submit', showResults);
-searchForm.dispatchEvent(new Event('submit'));
 btnLoadMore.addEventListener('click', showMore);
 
 let createSimpleLightBox = new SimpleLightbox('.gallery a', {
@@ -22,9 +20,10 @@ createSimpleLightBox.on('show.simplelightbox', function () {});
 
 async function showResults(e) {
   e.preventDefault();
+  galleryEl.innerHTML = '';
   e.target.page.value = '1';
   const q = searchQuery.value;
-  await loadPhotos({ q, page: '1' });
+  await loadPhotos({ q, page: '1'});
 }
 
 async function loadPhotos({ q, page }) {
@@ -34,11 +33,11 @@ async function loadPhotos({ q, page }) {
 }
 
 function drawResults({ photos, page }) {
-  const gallery = document.querySelector('.gallery');
   if (page === '1') {
-    gallery.innerHTML = '';
+    galleryEl.innerHTML = '';
   }
-  gallery.innerHTML = getPhotos(photos);
+  galleryEl.innerHTML = getPhotos(photos);
+  btnLoadMore.classList.remove('is-hidden');
 }
 
 const getPhotos = photo => {
